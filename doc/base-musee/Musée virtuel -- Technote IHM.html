@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<!-- Utilisation du CSS et du template venant de W3Schools, et adapté pour le projet -->
+<html><head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        
+        <link rel="stylesheet" href="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/style.css">
+		<link rel="stylesheet" href="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/w3.css">
+		<link rel="stylesheet" href="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/css.css">
+        
+		<!-- JS pour afficher des blocs de code en HTML (guide : https://github.com/google/code-prettify )-->
+		<link rel="stylesheet" type="text/css" href="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/prettify.css">
+		
+		<title>Musée virtuel -- Technote IHM</title>
+    </head>
+    
+    <body>
+		<nav class="w3-sidenav w3-purple w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold" id="mySidenav"><br>
+			<a href="javascript:void(0)" onclick="w3_close()" class="w3-padding-xlarge w3-hide-large w3-display-topleft w3-hover-white" style="width:100%;font-size:22px">Close Menu</a>
+			<div class="w3-container">
+				<h3 class="w3-padding-64"><b>Interaction<br>Homme-Machine</b><br><br>Technote<br>Musée Virtuel<br>Priscilla K. &amp; Benoit B.</h3>
+			</div>
+
+			<a href="#avpropos" onclick="w3_close()" class="w3-padding w3-hover-white">Avant-Propos</a> 
+			<a href="#musee" onclick="w3_close()" class="w3-padding w3-hover-white">Musée virtuel</a> 
+			<a href="#squelette" onclick="w3_close()" class="w3-padding w3-hover-white">Création du squelette</a> 
+			<a href="#scene" onclick="w3_close()" class="w3-padding w3-hover-white">Première scène</a> 
+			<a href="#controles" onclick="w3_close()" class="w3-padding w3-hover-white">Contrôles</a>
+			<a href="#enceinte" onclick="w3_close()" class="w3-padding w3-hover-white">Enceinte du musée</a>
+			<a href="#collision" onclick="w3_close()" class="w3-padding w3-hover-white">Gestion des collisions</a>
+			<a href="#textures" onclick="w3_close()" class="w3-padding w3-hover-white">Ajout des textures</a>
+			<a href="#modale" onclick="w3_close()" class="w3-padding w3-hover-white">Vues modales</a>
+			<a href="#expo" onclick="w3_close()" class="w3-padding w3-hover-white">Mise en place de l'expo</a>
+			<a href="#conclusion" onclick="w3_close()" class="w3-padding w3-hover-white">Conclusion</a>
+		</nav>
+		
+		<header class="w3-container w3-top w3-hide-large w3-purple w3-xlarge w3-padding">
+			  <a href="javascript:void(0)" class="w3-btn w3-purple w3-border w3-border-white w3-margin-right" onclick="w3_open()">☰</a>
+			  <span>Technote IHM</span>
+		</header>
+		
+		<div class="w3-main" style="margin-left:340px;margin-right:40px">	
+            <div class="w3-container" style="margin-top:80px">
+				<h1 class="w3-jumbo"><b>Technote d'IHM : Musée Virtuel.</b></h1>
+				  <h2>Par Priscilla K. &amp; Benoit B.</h2>
+			  </div>
+		
+			<div class="w3-container" id="avpropos" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-red"><b>Avant-propos.</b></h1>
+				<hr style="width:50px;border:5px solid red" class="w3-round">
+				<p>Dans le cadre de notre premier Semestre dans le cours 
+d'interaction Homme-Machine, nous avions comme projet initial de 
+réaliser un musée de l'interaction. Après concertation, nous avons 
+décidé de continuer indirectement le projet en réalisant une technote 
+(que vous êtes en train de consulter) expliquant et montrant comment 
+créer un musée virtuel en 3D avec WebGL.</p>
+				<p>Pour cela, nous avons utilisé la librairie <a href="http://babylonjs.com/" target="_blank">Babylon JS</a> pour faciliter l'utilisation de WebGL, ainsi que <a href="https://www.blender.org/" target="_blank">Blender</a> pour créer l'enceinte du musée virtuel.</p>
+			</div>
+			
+			<div class="w3-container" id="musee" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-purple"><b>Musée virtuel.</b></h1>
+				<hr style="width:50px;border:5px solid purple" class="w3-round">
+				<div class="w3-row-padding">
+					<div class="w3-half"> <!-- Partie gauche des photos -->
+						  <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/musee1.jpg" style="width:100%" onclick="onClick(this)" alt="L'acceuil du musée">
+					</div>
+
+					<div class="w3-half"> <!-- Partie droite -->
+						  <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/musee2.jpg" style="width:100%" onclick="onClick(this)" alt="Une partie de notre système solaire.">
+					</div>
+				 </div>
+				<p>Le musée virtuel est un exemple d'une exposition qu'on pourrait 
+retrouver dans un musée de l'interaction. Le thème choisi est l'espace, 
+avec des interactions liées à ce thème. Les éléments ne redirigent nulle
+ part, mais on pourrait imaginer rediriger vers une autre section du 
+site dédiée à cette oeuvre, où le visiteur pourrait avoir des 
+informations plus avancées que celles fournies par l'exposition 
+virtuelle.</p>
+				<p>Dans cette technote, vous découvrirez comment recréer cette salle
+ étape par étape, et ainsi le faire évoluer vers d'autres possibilités 
+comme :</p>
+				<ul>
+					<li>Un grand musée virtuel en réalité virtuelle (Babylon JS est compatible avec des casques de réalité virtuelle).</li>
+					<li>Une partie d'une exposition d'un vrai musée impactant dans la salle où vous vous trouvez.</li>
+					<li>Un jeu d'aventures/d'exploration comme <u>Myst</u>™.</li>
+					<li>Un jeu de tir à la première personne ou à la troisième personne.</li>
+					<li>Un portfolio interactif...</li>
+				</ul>
+				<h3>Commandes</h3>
+				<p>Le musée tel quel ne peut être joué qu'avec un clavier et une souris. Cependant, on pourrait brancher une manette de <u>Xbox 360</u>™ filaire et jouer, ou bien utiliser un dispositif de réalité virtuelle.</p>
+				<ul>
+					<li>Flèches directionelles ou Z/Q/S/D : <b>Se déplacer</b></li>
+					<li>Touche E : <b>Interagir</b></li>
+					<li>Echap : Afficher le curseur.</li>
+				</ul>
+				
+				<h3>Navigateurs compatibles</h3>
+				<p><b>Mozilla Firefox</b> et <b>Internet Explorer</b> fonctionnent parfaitement. Les autres navigateurs n'ont pas été testés.</p>
+				
+				<h3>Musée virtuel</h3>
+				<p>Pour acceder au musée virtuel, cliquez sur <b><a href="https://www.benoitbm.fr/jeux/museeVirtuel/musee.html" target="_blank">ce lien</a></b>. (La page s'ouvrira dans un nouvel onglet)</p>
+			</div>
+            
+            <div class="w3-container" id="squelette" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Création du squelette.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Dans un premier temps, nous allons mettre en place l'architecture
+ du projet, et pour mon cas, voici l'organisation des fichiers et des 
+dossiers :</p>
+                <ul>
+                    Dossier racine :
+                    <li><b><i>css</i></b>: Dossier qui contiendra les feuilles de style du projet.</li>
+                    <ul>
+                        <li><b>app.css</b>: CSS pour la page de l'exposition</li>
+                        <li><b>style.css</b>: CSS général</li>
+                    </ul>
+                    
+                    <li><b><i>img</i></b>: Dossier qui contiendra les images liés à l'habillage du site (photos, illustrations)</li>
+                    <ul>
+                        <li><b><i>icon</i></b>: Dossier qui contiendra les icones pour l'habillage du site</li>
+                    </ul>
+                    
+                    <li><i>obj</i>: Dossier optionnel contenant les objets 3D pour le rendu</li>
+                    
+                    <li><b><i>src</i></b>: Dossier qui contiendra les fichiers sources exterieurs / librairies pour le projet</li>
+                    
+                    <li><b><i>texture</i></b>: Dossier qui contiendra les textures pour le rendu</li>
+                    <ul>
+                        <li><b><i>skybox</i></b>: Dossier recommandé qui contiendra les textures pour la skybox</li>
+                        <li><b><i>video</i></b>: Dossier qui contiendra les vidéos pour l'exposition</li>
+                    </ul>
+                    
+                    <li><b>index.html</b>: Le fichier d'acceuil pour recevoir les visiteurs</li>
+                    <li><b>musee.html</b>: Le fichier qui contiendra l'exposition virtuelle</li>
+                    <li><b>musee.js</b>: Le fichier qui contiendra les fonctions et algorithmes pour l'exposition virtuelle</li>
+                </ul>
+                <p>Une fois les dossiers et les fichiers crées, 
+l'architecture et le squelette du projet est prêt, et nous pouvons 
+commencer à créer le projet.</p>
+			</div>
+            
+            <div class="w3-container" id="scene" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Première scène.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Avant de créer la scène, assurez vous d'avoir téléchargé Babylon.js à <a href="http://babylonjs.com/versionBuilder/" target="_blank">cette adresse</a>. Choisissez les composants que vous aurez besoin, dans notre cas, prenez <b>OBJ</b> dans la section <u>LOADERS</u>.</p>
+                <p>Dans un premier temps, nous allons préparer les fichiers <b>musee.html</b> et <b>app.css</b>.</p>
+                <h3>musee.html</h3>
+                <xmp class="prettyprint lang-html prettyprinted" style=""><span class="dec">&lt;!DOCTYPE html&gt;</span><span class="pln">
+</span><span class="tag">&lt;html&gt;</span><span class="pln">
+    </span><span class="tag">&lt;head&gt;</span><span class="pln">
+        </span><span class="tag">&lt;link</span><span class="pln"> </span><span class="atn">rel</span><span class="pun">=</span><span class="atv">"stylesheet"</span><span class="pln"> </span><span class="atn">href</span><span class="pun">=</span><span class="atv">"css/app.css"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+        </span><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">http-equiv</span><span class="pun">=</span><span class="atv">"content-type"</span><span class="pln"> </span><span class="atn">content</span><span class="pun">=</span><span class="atv">"text/html; charset=utf-8"</span><span class="pln"> </span><span class="tag">/&gt;</span><span class="pln">
+        </span><span class="tag">&lt;title&gt;</span><span class="pln">Exposition virtuelle</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;body&gt;</span><span class="pln">
+        </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"src/babylon.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+        </span><span class="tag">&lt;canvas</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"musee"</span><span class="tag">&gt;&lt;/canvas&gt;</span><span class="pln">
+        </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"musee.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/body&gt;</span><span class="pln">
+</span><span class="tag">&lt;/html&gt;</span><span class="pln">
+                </span></xmp>
+                <p>Nous chargeons dans le header le css (expliqué ci-dessous), on précise l'encodage (ici l'utf-8) et le titre de l'onglet.</p>
+                <p>Dans le body, babylon.js est chargé pour pouvoir 
+faire le rendu 3D de la scène, le canvas va être le support pour le 
+rendu, et en dernier le script dans lequel nous allons créer la scène 
+sera chargée.</p>
+                
+                <h3>app.css</h3>
+                <xmp class="prettyprint lang-css prettyprinted" style=""><span class="pln">body</span><span class="pun">,</span><span class="pln"> html
+</span><span class="pun">{</span><span class="pln">
+    margin</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    overflow</span><span class="pun">:</span><span class="pln"> hidden</span><span class="pun">;</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+    height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+canvas
+</span><span class="pun">{</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+    height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">                
+                </span></xmp>
+                
+                <p>Dans le css, on pousse le canvas à occuper toute la taille disponible par le navigateur, et on met le <code>overflow</code> sur la valeur <code>hidden</code> pour éviter d'avoir la barre de défilement vertical.</p>
+                
+                <h3>musee.js</h3>
+                <p>Dans un premier temps, nous allons récupérer le canvas pour pouvoir mettre le rendu de la scène dans celui-ci.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> canvas </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">"musee"</span><span class="pun">);</span></code>
+                <p>Ensuite nous allons instancier le moteur.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> engine </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Engine</span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">);</span></code>
+                <p>Puis on crée une fonction pour instancier la scène.</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> createScene </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+                
+    </span><span class="kwd">var</span><span class="pln"> scene </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Scene</span><span class="pun">(</span><span class="pln">engine</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On crée une nouvelle scène</span><span class="pln">
+    scene</span><span class="pun">.</span><span class="pln">clearColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0.2</span><span class="pun">);</span><span class="pln"> </span><span class="com">//Couleur par défaut quand il n'y a pas d'élement (soit la couleur au fond)</span><span class="pln">
+    
+    </span><span class="com">//Création d'une caméra avec les paramètres : string nom_camera, Vector3 position, scene</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> camera </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">FreeCamera</span><span class="pun">(</span><span class="str">"FreeCamera"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">3</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-</span><span class="lit">10</span><span class="pun">),</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+    
+    camera</span><span class="pun">.</span><span class="pln">setTarget</span><span class="pun">(</span><span class="pln">BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">.</span><span class="typ">Zero</span><span class="pun">());</span><span class="pln"> </span><span class="com">//On fait regarder la caméra vers l'origine de la scène.</span><span class="pln">
+    
+    camera</span><span class="pun">.</span><span class="pln">attachControl</span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On attache les contrôles de la scène via le canvas qu'on a crée tout à l'heure dans musee.html</span><span class="pln">
+    
+    </span><span class="com">//Paramètres : string nom, Vector3 orientation_lumière, scene</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> light </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">HemisphericLight</span><span class="pun">(</span><span class="str">"light1"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">),</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On crée une nouvelle lumière générale orientée vers le haut</span><span class="pln">
+
+    light</span><span class="pun">.</span><span class="pln">intensity </span><span class="pun">=</span><span class="pln"> </span><span class="pun">.</span><span class="lit">5</span><span class="pun">;</span><span class="pln"> </span><span class="com">//On diminue un peu l'intensité de la lumière</span><span class="pln">
+    
+    </span><span class="com">//Paramètres : string nom, int nombre_sous-divisions, int diamètre, scene</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> sphere </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateSphere</span><span class="pun">(</span><span class="str">"sphere1"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">16</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On rajoute une sphère pour voir du visuel (et qui sera le centre de la salle d'exposition).</span><span class="pln">
+    
+    sphere</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="com">//On fait monter un peu la sphère.</span><span class="pln">
+    
+    </span><span class="com">//Paramètres : string nom, int longueur (axe x), int largeur (axe z), int sous-divisions, scene</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> ground </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateGround</span><span class="pun">(</span><span class="str">"ground1"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">6</span><span class="pun">,</span><span class="pln"> </span><span class="lit">6</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On crée un sol (petit certes) qui servira plus tard</span><span class="pln">
+    
+    </span><span class="kwd">return</span><span class="pln"> scene</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Et on renvoie la scène pour pouvoir l'afficher plus tard.    </span><span class="pln">
+</span><span class="pun">}</span></pre>
+            <p>A cette étape, nous avons une scène, une caméra contrôlée
+ par le canvas et par extension l'utilisateur, une lumière, une sphère 
+et le sol.</p>
+            <p>Cependant, cette fonction n'est jamais appelée, donc 
+aucune scène créée, et la scène n'a pas une boucle de rendu. Pour cela, 
+on rajoute dans la fonction <code>createScene</code> avec ces lignes :</p>
+            <pre class="prettyprint lang=js prettyprinted" style=""><span class="pln">engine</span><span class="pun">.</span><span class="pln">runRenderLoop</span><span class="pun">(</span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    scene</span><span class="pun">.</span><span class="pln">render</span><span class="pun">();</span><span class="pln">
+ </span><span class="pun">});</span></pre>
+                <p>Et on peut appeler la fonction en dehors de la fonction, à la fin du fichier.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> scene </span><span class="pun">=</span><span class="pln"> createScene</span><span class="pun">();</span></code>
+                <p>Maintenant votre première scène est créée, et devrait ressembler à ça :</p>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/pscene1.jpg" style="width:100%" onclick="onClick(this)" alt="Résultat de la première scène.">
+                <p>On peut améliorer encore ce résultat avec ce code suivant :</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">window</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">'resize'</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">engine</span><span class="pun">.</span><span class="pln">resize</span><span class="pun">()});</span></code>
+                <p>Cette ligne permet à chaque redimentionnement de la fenêtre du navigateur d'adapter à nouveau la taille du rendu du canvas.</p>
+                <p>Félicitations, vous venez de créer votre première scène en WebGL avec BabylonJS ! Vous pouvez tester à <a href="http://www.babylonjs-playground.com/#1GM4YQ" target="_blank">cette adresse</a> le résultat attendu.</p>
+			</div>
+            
+            <div class="w3-container" id="controles" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Gestion des contrôles.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Dans cette section, nous allons voir comment améliorer les 
+contrôles pour améliorer l'expérience de l'utilisateur. A l'heure 
+actuelle, l'utilisateur peut bouger avec les flèches directionnelles, et
+ peut bouger la caméra en maintenant un clic de la souris et en bougeant
+ celle-ci.</p>
+                <p>Seulement les contrôles au clavier et à la souris 
+seront vus dans cette technote, cependant BabylonJS gère l'utilisation 
+d'une manette filaire <u>Xbox 360</u>™, plus d'informations disponible à <a href="http://doc.babylonjs.com/classes/2.5/GamepadCamera" target="_blank">cette adresse</a>.</p>
+                
+                <h3>Modification des mouvements</h3>
+                <p>Dans un premier temps, nous allons modifier les 
+déplacements de la caméra. Nous allons rajouter la possibilité de se 
+déplacer avec les touches Z,Q,S et D.</p>
+                
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//musee.js, après la déclaration de la camera.</span><span class="pln">
+camera</span><span class="pun">.</span><span class="pln">keysLeft </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">81</span><span class="pun">,</span><span class="pln"> </span><span class="lit">37</span><span class="pun">];</span><span class="pln"> </span><span class="com">//Q et &lt;-</span><span class="pln">
+camera</span><span class="pun">.</span><span class="pln">keysUp </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">90</span><span class="pun">,</span><span class="pln"> </span><span class="lit">38</span><span class="pun">];</span><span class="pln"> </span><span class="com">//Z et Flèche du haut</span><span class="pln">
+camera</span><span class="pun">.</span><span class="pln">keysRight </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">68</span><span class="pun">,</span><span class="pln"> </span><span class="lit">39</span><span class="pun">];</span><span class="pln"> </span><span class="com">//D et -&gt;</span><span class="pln">
+camera</span><span class="pun">.</span><span class="pln">keysDown </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="lit">83</span><span class="pun">,</span><span class="pln"> </span><span class="lit">40</span><span class="pun">];</span><span class="pln"> </span><span class="com">//S et flèche du bas</span></pre>
+            <p>Les fonctions <code>keys</code> combiné à une direction (en anglais) indique les touches du clavier pouvant bouger la caméra dans la direction liée.</p>
+            <p>Parmi la section des mouvements, on peut modifier la vitesse de déplacement de caméra avec cette option :</p>
+            <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">camera</span><span class="pun">.</span><span class="pln">speed </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0.5</span><span class="pun">;</span></code>
+            
+            <p>De plus, comme vous avez pu le constater, on peut se 
+déplacer dans tous les sens dans l'espace à travers les murs (que l'on 
+reglera plus tard dans la partie <u>Gestion des collisions</u>). Nous allons rajouter l'effet de la gravité sur la caméra en rajoutant cette ligne de code :</p>
+            <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">camera</span><span class="pun">.</span><span class="pln">applyGravity </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code>
+            
+            <h3>Gestion du curseur</h3>
+            <p>Dans cette sous-partie, nous allons gérer le maniement du
+ curseur. Lorsque l'utilisateur cliquera sur le rendu, celui-ci cachera 
+le curseur et il suffira de bouger la souris pour déplacer le "regard" 
+de la caméra.</p>
+            <p>Dans un premier temps, on rajoute la fonction qui réagit au clic souris.</p>
+            <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//musee.js, dans la fonction createScene</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> islocked </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+scene</span><span class="pun">.</span><span class="pln">onPointerDown </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">evt</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">islocked</span><span class="pun">)</span><span class="pln"> </span><span class="com">//Si la souris n'est pas bloqué...</span><span class="pln">
+    </span><span class="pun">{</span><span class="pln">
+	canvas</span><span class="pun">.</span><span class="pln">requestPointerLock </span><span class="pun">=</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">requestPointerLock </span><span class="pun">||</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">msRequestPointerLock </span><span class="pun">||</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">mozRequestPointerLock </span><span class="pun">||</span><span class="pln"> canvas</span><span class="pun">.</span><span class="pln">webkitRequestPointerLock </span><span class="pun">||</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln"> 
+        </span><span class="com">//Test des requêtes de divers navigateurs</span><span class="pln">
+        </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">.</span><span class="pln">requestPointerLock</span><span class="pun">)</span><span class="pln"> </span><span class="com">//Si la requête aboutie,</span><span class="pln">
+            canvas</span><span class="pun">.</span><span class="pln">requestPointerLock</span><span class="pun">();</span><span class="pln"> </span><span class="com">//On appelle la fonction</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    </span><span class="com">//En testant ici si evt === 0, 1 ou 2, on peut déterminer quel clic a été pressé, et on peut effectuer</span><span class="pln">
+    </span><span class="com">//des actions liées à un clic.</span><span class="pln">
+</span><span class="pun">};</span></pre>
+            <p>Une fois cette fonction implémentée, il reste plus qu'à créer les évènements DOM pour les navigateurs.</p>
+            
+            <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//musee.js, dans la fonction createScene</span><span class="pln">
+document</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">"pointerlockchange"</span><span class="pun">,</span><span class="pln"> pointerlockchange</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+document</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">"mspointerlockchange"</span><span class="pun">,</span><span class="pln"> pointerlockchange</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+document</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">"mozpointerlockchange"</span><span class="pun">,</span><span class="pln"> pointerlockchange</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+document</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">"webkitpointerlockchange"</span><span class="pun">,</span><span class="pln"> pointerlockchange</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span></pre>
+            
+            <p>Et il ne reste plus qu'à rajouter la fonction <code>pointerlockchange</code> pour gérer le contrôle de la souris dans le rendu lorsque le curseur est verrouillé dans le cas.</p>
+            
+            <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//musee.js, à mettre avant les évènements</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> pointerlockchange </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="pun">()</span><span class="pln"> 
+</span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> controlEnabled </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">mozPointerLockElement </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">webkitPointerLockElement </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">msPointerLockElement </span><span class="pun">||</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">pointerLockElement </span><span class="pun">||</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">controlEnabled</span><span class="pun">)</span><span class="pln"> 
+    </span><span class="pun">{</span><span class="pln">
+        camera</span><span class="pun">.</span><span class="pln">detachControl</span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">);</span><span class="pln">
+        islocked </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> 
+    </span><span class="kwd">else</span><span class="pln"> 
+    </span><span class="pun">{</span><span class="pln">
+        camera</span><span class="pun">.</span><span class="pln">attachControl</span><span class="pun">(</span><span class="pln">canvas</span><span class="pun">);</span><span class="pln">
+        islocked </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">};</span></pre>
+            <p>Suite à cela, vous devriez pouvoir verrouiller le curseur
+ et bouger votre souris librement. Cependant selon le navigateur et 
+l'IDE utilisé, il se peut qu'il y ait des problèmes de mouvement de 
+souris (particulièrement avec Brackets + Google Chrome).</p>
+            <p>Par ailleurs, la sensibilité du mouvement de la caméra peut être reglée avec cette ligne :</p>
+            <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">camera</span><span class="pun">.</span><span class="pln">angularSensibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">3500</span><span class="pun">;</span></code>
+            <p>Plus la valeur est elevée, moins la caméra tournera vite.
+ Et cela conclut la partie sur la gestion et modification des contrôles.</p>
+			</div>
+            
+            <div class="w3-container" id="enceinte" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Création de l'enceinte du musée.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Dans cette partie, nous allons créer l'enceinte du musée, et plus
+ précisément les murs. Dans un premier temps, nous pouvons agrandir le 
+sol pour avoir une plus grande surface.</p>
+                <p>Pour créer les murs, nous pouvons créer un cube par 
+mur, ce qui peut être long et fastidieux, puisqu'il faut créer chaque 
+cube, le placer, et modifier ses dimensions. Ou nous pouvons charger un 
+objet en 3D que nous avons pu créer à l'aide d'un logiciel de CAO 
+(Conception Assistée par Ordinateur) comme <u>Blender</u>™ ou <u>Maya</u>™.</p>
+                <p>On partira sur une enceinte crée dans un objet 3D au format <i>.obj</i>, que vous pourrez récupérer ici à ces liens : <a href="https://www.benoitbm.fr/jeux/museeVirtuel/obj/salle.obj" target="_blank">partie 1</a> et <a href="https://www.benoitbm.fr/jeux/museeVirtuel/obj/salle.mtl" target="_blank">partie 2</a>.</p>
+                <p>Vous aurez besoin de l'option <b>OBJ LOADER</b> lorsque vous avez téléchargé Babylon JS sur la page de téléchargement.</p>
+                <p>Le fait qu'on charge un objet, le moteur doit charger
+ l'objet avant que le rendu soit effectué. Donc nous devons rajouter un 
+loader, qui est un Asset Manager.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> loader </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">AssetsManager</span><span class="pun">(</span><span class="pln">scene</span><span class="pun">);</span></code>
+                
+                <p>Une fois le loader crée, on doit rajouter une tâche de chargement de Mesh (d'objet 3D) pour le loader, avec cette commande :</p>
+                <code class="prettyprint lang=jd prettyprinted" style=""><span class="kwd">var</span><span class="pln"> salle </span><span class="pun">=</span><span class="pln"> load</span><span class="pun">.</span><span class="pln">addMeshTask</span><span class="pun">(</span><span class="str">"nom"</span><span class="pun">,</span><span class="pln"> </span><span class="str">""</span><span class="pun">,</span><span class="pln"> </span><span class="str">"obj/"</span><span class="pun">,</span><span class="pln"> </span><span class="str">"salle.obj"</span><span class="pun">);</span></code>
+                
+                <p>Suite à cela, on s'assure que le chargement a réussi,
+ et suite à cela, on peut effectuer des opérations sur l'objet (comme le
+ déplacer) :</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//musee.js, dans createScene, après la déclaration de var salle</span><span class="pln">
+salle</span><span class="pun">.</span><span class="pln">onSuccess </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">t</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    t</span><span class="pun">.</span><span class="pln">loadedMeshes</span><span class="pun">.</span><span class="pln">forEach</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">m</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> </span><span class="com">//On édite ici chaque maillage de l'objet</span><span class="pln">
+        m</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2.5</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Pour le monter en hauteur</span><span class="pln">
+        m</span><span class="pun">.</span><span class="pln">position</span><span class="pun">.</span><span class="pln">x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">10</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Et on le décale un peu pour que quand on commence, il soit bien placé.</span><span class="pln">
+	m</span><span class="pun">.</span><span class="pln">checkCollisions </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Ajout de la détection des collisions, expliqué plus tard.</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">};</span></pre>
+            <p>Une fois les actions sur le maillage et l'objet ont été 
+réalisés, on peut lancer le chargement et déclencler les tâches 
+enregistrées dans le loader.</p>
+            <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">loader</span><span class="pun">.</span><span class="pln">load</span><span class="pun">();</span></code>
+                
+            <p>Le fait qu'on utilise un loader et un assetmanager 
+implique un préchargement des ressources avant de faire le rendu, donc 
+on ne peut pas lancer le rendu de la scène dès que la page est chargée. 
+Il faut donc faire le rendu une fois que le loader a fini de charger les
+ ressources. Il faut donc adapter la boucle de rendu :</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="pln">loader</span><span class="pun">.</span><span class="pln">onFinish </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+    engine</span><span class="pun">.</span><span class="pln">runRenderLoop</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">
+        </span><span class="com">//Mettre les éléments de rendu ici.</span><span class="pln">
+        </span><span class="com">//...</span><span class="pln">
+    </span><span class="pun">});</span><span class="pln">
+</span><span class="pun">};</span></pre>
+            <p>Avec l'ajout de ces lignes, le rendu se lancera qu'une 
+fois que les taches sont réalisées (donc une fois que l'objet a fini de 
+charger). Suite à cela, nous sommes prêts à voir plus en détail le 
+fonctionnement du système de collisions.</p>
+			</div>
+            
+            <div class="w3-container" id="collision" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Gestion des collisions.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Comme vous avez pu le constater, en bougeant la camera traverse 
+les murs et le sol. Dans cette section, nous allons remédier à ce 
+problème et gérer le système de collision dans le rendu.</p>
+                <p>Comme vu dans la section précédente, lors de l'édition et des meshes des murs de la salle, la ligne <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">m</span><span class="pun">.</span><span class="pln">checkCollisions </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span></code>
+ permet d'activer les collisions. Le fait d'appliquer ça empêche aux 
+objets ayant cette caractéristique sur vrai de se rentrer dedans et donc
+ de rester dans la salle dans le cas de notre musée.</p>
+                <p>Pour chaque élément, il faudra mettre l'attribut <code>checkCollisions</code> égal à true.</p>
+                
+                <h3>Collisions liées à la camera</h3>
+                <p>Il existe une fonction qui permet de détecter si un 
+objet a une collision avec un 2e objet, ce qui peut être pratique pour 
+tester si un objet est dans une zone précise, ce qui sera utile pour 
+l'exposition. Le problème c'est que la hitbox de la caméra n'est pas 
+compatible avec cette fonction, il faudra donc rajouter une sphere de 
+collision.</p>
+                <p>Dans un premier temps, on crée une nouvelle sphere.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> hitbox </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateSphere</span><span class="pun">(</span><span class="str">"hitbox"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">16</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Ensuite, nous mettons la sphere au même endroit que 
+la camera (si la camera a changé de position de départ, qui se fait avec
+ la fonction <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">objet</span><span class="pun">.</span><span class="pln">position </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">,</span><span class="pln"> z</span><span class="pun">);</span></code>).
+ Une fois cette étape réalisée, on met cette sphère en enfant de la 
+caméra pour qu'elle dépende des mouvements de la caméra, et donc de sa 
+position.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">hitbox</span><span class="pun">.</span><span class="pln">parent </span><span class="pun">=</span><span class="pln"> camera</span><span class="pun">;</span></code>
+                
+                <p>Il ne manquera plus qu'à rajouter les zones de 
+détection (avec checkCollisions sur false pour ces zones ET pour la 
+hitbox), et vous pourrez faire des zones de trigger pour faire des 
+évènements scriptés ou dans des lieux spécifiques, qu'on mettra en 
+pratique dans la partie <u>Exposition</u>. Maintenant que nous avons la 
+salle d'exposition et une physique normale, avec des contrôles adaptés 
+pour le plus grand nombre, nous pouvons maintenant rajouter des textures
+ pour rendre le musée plus agréable à visiter.</p>
+			</div>
+            
+            <div class="w3-container" id="textures" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Ajout des textures.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Actuellement, notre musée ressemble à des salles sans textures, et une lumière basique, qui ressemble à cela :</p>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/mat1.jpg" style="width:100%" onclick="onClick(this)" alt="La salle d'exposition, sans textures.">
+                
+                <p>On peut rajouter des textures, pour rendre la salle 
+moins monotone est plus agréable, pour passer de l'image précédente à 
+l'image suivante :</p>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/mat2.jpg" style="width:100%" onclick="onClick(this)" alt="La salle d'exposition, avec textures.">
+                
+                <p>Dans un premier temps, nous allons créer un nouveau 
+matériau qui sera le conteneur de la texture, et qu'on appliquera aux 
+objets que l'on souhaite. Commençons par déclarer le matériau :</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> mat_sol </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">StandardMaterial</span><span class="pun">(</span><span class="str">"sol"</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Ensuite, nous allons rajouter la texture au matériau :</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">mat_sol</span><span class="pun">.</span><span class="pln">diffuseTexture </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Texture</span><span class="pun">(</span><span class="str">"texture/sol.jpg"</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Et nous pouvons appliquer le matériau aux objets souhaités :</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">ground</span><span class="pun">.</span><span class="pln">material </span><span class="pun">=</span><span class="pln"> mat_sol</span><span class="pun">;</span></code>
+                
+                <h3>Options supplémentaires</h3>
+                <p>On peut rajouter un effet que l'objet est en 3D en 
+rajoutant une texture bump avec une texture "normal", qui donnerait cet 
+effet (à gauche sans, à droite avec) : </p>
+                <center><img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/1.html" onclick="onClick(this)" alt="Gauche : Sans bump map, Droite : Avec (source : babylonjs.com)"></center>
+                <p>Le fait de rajouter ce type de texture permet de 
+simuler une profondeur sans modifier l'objet, on ne joue qu'avec les 
+normales (les réflections de lumière). Voici à quoi ressemble un texture
+ avec sa <i>normal map</i>.</p>
+                <div class="w3-row-padding">
+					<div class="w3-half"> <!-- Partie gauche des photos -->
+						  <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/240.jpg" style="width:100%" onclick="onClick(this)" alt="La texture du sol">
+					</div>
+
+					<div class="w3-half"> <!-- Partie droite -->
+						  <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/240_norm.jpg" style="width:100%" onclick="onClick(this)" alt="La normal map de la texture">
+					</div>
+				 </div>
+                
+                <p>Après on peut répéter la texture dans le cas où 
+l'objet est trop grand (et donc éviter d'avoir un résultat qui donne un 
+sol pixélisé et approximatif). Pour cela on peut rajouter ces lignes 
+pour résoudre ce problème :</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="pln">mat_sol</span><span class="pun">.</span><span class="pln">diffuseTexture</span><span class="pun">.</span><span class="pln">uScale </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16.0</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="lit">1.5</span><span class="pun">;</span><span class="pln"> 
+mat_sol</span><span class="pun">.</span><span class="pln">diffuseTexture</span><span class="pun">.</span><span class="pln">vScale </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16.0</span><span class="pun">;</span><span class="pln">
+mat_sol</span><span class="pun">.</span><span class="pln">bumpTexture</span><span class="pun">.</span><span class="pln">uScale </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16.0</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="lit">1.5</span><span class="pun">;</span><span class="pln">
+mat_sol</span><span class="pun">.</span><span class="pln">bumpTexture</span><span class="pun">.</span><span class="pln">vScale </span><span class="pun">=</span><span class="pln"> </span><span class="lit">16.0</span><span class="pun">;</span></pre>
+                <p>Le uScale et vScale permet de savoir le nombre de 
+fois où on répète la texture sur le materiau horizontalement et 
+verticalement (dans leur ordre respectif).</p>
+                
+                <p>On peut également modifier la valeur de l'alpha pour faire des matériaux transparents, comme du verre par exemple.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">monMateriau</span><span class="pun">.</span><span class="pln">alpha </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0.5</span><span class="pun">;</span></code>
+                
+                <p>Ou même afficher uniquement l'objet en mode "fils de fer".</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">materiauFilFer</span><span class="pun">.</span><span class="pln">wireframe </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/mat3.jpg" style="width:100%" onclick="onClick(this)" alt="Un objet en fil de fer">
+                
+                <h3>Textures vidéo</h3>
+                <p>BabylonJS gère également les textures animés si on 
+met une vidéo, idéal pour simuler un écran TV, ou pour rajouter une 
+présentation vidéo dans le cas de notre musée. Pour l'exemple, nous 
+allons mettre une vidéo de la présentation de la faculté des sciences de
+ Montpellier.</p>
+                <p>Pour cet élément, il est recommandé d'utiliser un 
+mesh type Plane, cependant ce type de texture fonctionne avec tous les 
+objets. Dans premier temps, créons une nouvelle texture.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> videoMat </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">StandardMaterial</span><span class="pun">(</span><span class="str">"vidFac"</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Ensuite, nous rajoutons la ou les vidéos (vous pouvez mettre autant de vidéos dans le tableau, elles se joueront à la suite).</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">videoMat</span><span class="pun">.</span><span class="pln">diffuseTexture </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">VideoTexture</span><span class="pun">(</span><span class="str">"videosFac"</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">"texture/video/faculte.mp4"</span><span class="pun">],</span><span class="pln"> scene</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span></code>
+                
+                <p>Puisque j'utilise des plans comme surface pour la 
+vidéo, on va activer l'option pour voir la texture même en la regardant 
+derrière (puisqu'un plan ne peut être vu que d'un seul côté à la base).</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">videoMat</span><span class="pun">.</span><span class="pln">backFaceCulling </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code>
+                
+                <p>Ensuite nous allons régler la couleur émis par la 
+texture, d'abord la couleur habituelle quelque soit la lumière, qu'on va
+ mettre à la valeur maximum pour que quelque soit la luminosité, la 
+vidéo ne soit pas impactée.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">videoMat</span><span class="pun">.</span><span class="pln">diffuseColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">);</span></code>
+                
+                <p>Après, nous allons régler la couleur dite <i>specular</i>, soit la couleur de reflet, que nous allons mettre à 0 pour éviter les reflets lors du visionnage sur le plan.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">videoMat</span><span class="pun">.</span><span class="pln">specularColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></code>
+                
+                <p>On peut ensuite appliquer le matériau à l'objet choisi, et faire jouer la ou les vidéos en boucle.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">videoMat</span><span class="pun">.</span><span class="pln">diffuseTexture</span><span class="pun">.</span><span class="pln">video</span><span class="pun">.</span><span class="pln">loop </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code>
+                
+                <h3>Les skybox</h3>
+                <p>On peut simuler un faux ciel avec un cube géant 
+contenant une texture de ciel, qu'on appelle Skybox. Dans le cas de 
+notre musée avec pour thème l'espace, nous avons choisi de mettre un 
+skybox avec des photos de l'espace.</p>
+                <p>Dans un premier temps, nous allons créer un cube de grande taille.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> skybox </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateBox</span><span class="pun">(</span><span class="str">"skybox"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">300</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Ensuite, nous créeons un matériau pour la skybox.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> skyboxmat </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">StandardMaterial</span><span class="pun">(</span><span class="str">"m_skybox"</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span></code>
+                
+                <p>Suite à cela, nous allons rajouter quelques options. 
+Les premières sont de pouvoir visualiser les textures depuis l'intérieur
+ de cube et désactiver l'impact des lumières sur le matériau.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skyboxmat</span><span class="pun">.</span><span class="pln">backFaceCulling </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code><br>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skyboxmat</span><span class="pun">.</span><span class="pln">disableLightning </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code>
+                
+                <p>Ensuite on met les couleurs à 0 pour empêcher définitivement l'impact des lumières sur la skybox.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skyboxmat</span><span class="pun">.</span><span class="pln">diffuseColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></code><br>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skyboxmat</span><span class="pun">.</span><span class="pln">specularColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></code>
+                
+                <p>Après, on charge les textures de la skybox.</p>
+                <code>skyboxmat.reflectionTexture = new BABYLON.CubeTexture("texture/skybox/skybox", scene);</code>
+                
+                <p>Le fonctionnement des textures pour la skybox est 
+unique, pour cela, vous aurez besoin de 6 images représentant chacune un
+ côté du cube. Le nom sera partiellement défini par le dernier mot du 
+paramètre passé précédement, dans notre cas, la texture de la face 
+droite s'appellera <i>skybox_px</i>. Mais si par exemple le paramètre aurait été <code class="prettyprint lang=js prettyprinted" style=""><span class="str">"skybox/toto"</span></code>, la texture devra s'appeler <i>toto_px</i>.
+ Pour les textures donc, vous devrez rajouter un '_' après le nom 
+indiqué, et rajouter un autre mot selon la face du cube représenté :</p>
+                <ul>
+                    <li>nx pour la face de gauche</li>
+                    <li>px pour la face de droite</li>
+                    <li>ny pour la face du dessous</li>
+                    <li>py pour la face du dessus</li>
+                    <li>nz pour la face de devant</li>
+                    <li>pz pour la face de derrière</li>
+                </ul>
+                
+                <p>Ensuite il faut indiquer au matériau le mode de coordonnées.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skyboxMat</span><span class="pun">.</span><span class="pln">reflectionTexture</span><span class="pun">.</span><span class="pln">coordinatesMode </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Texture</span><span class="pun">.</span><span class="pln">SKYBOX_MODE</span><span class="pun">;</span></code>
+                
+                <p>Et pour terminer, on applique le matériau à la 
+skybox, et on indique à babylonJS que l'élement a une distance infinie 
+pour améliorer l'impression de ciel de la skybox.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skybox</span><span class="pun">.</span><span class="pln">material </span><span class="pun">=</span><span class="pln"> skyboxMat</span><span class="pun">;</span></code><br>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">skybox</span><span class="pun">.</span><span class="pln">infiniteDistance </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span></code>
+                
+                <p>Bravo, vous savez désormais manier les textures de BabylonJS !</p>
+			</div>
+            
+            <div class="w3-container" id="modale" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-blue"><b>Vues modales.</b></h1>
+				<hr style="width:50px;border:5px solid blue" class="w3-round">
+				<p>Dans cette section, nous allons voir ensemble les vues modales, 
+qui est un module HTML, et qui feront office d'interface avec 
+l'utilisateur. Un exemple de vue modale est quand vous cliquez sur une 
+des images de cette page et vous verrez un visionneur de photo modal. <i>Cet élément n'est pas lié à BabylonJS, mais nécéssaire pour la mise en l'exposition virtuelle.</i></p>
+                <p>Pour cela, nous allons utiliser et suivre le tutoriel de <a href="http://www.w3schools.com/howto/howto_css_modals.asp" target="_blank"> W3C Schools</a>. Dans un premier temps, nous allons rajouter ces lignes au fichier <b>app.css</b></p>
+                <pre class="prettyprint lang=css prettyprinted" style=""><span class="pun">.</span><span class="pln">modal </span><span class="pun">{</span><span class="pln">
+    display</span><span class="pun">:</span><span class="pln"> none</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* On le cache par défaut */</span><span class="pln">
+    position</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">fixed</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* Sa position sera fixe */</span><span class="pln">
+    z</span><span class="pun">-</span><span class="pln">index</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* Et en première position */</span><span class="pln">
+    left</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    top</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln"> 
+    height</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln"> 
+    overflow</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">auto</span><span class="pun">;</span><span class="pln">
+    background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> rgb</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">);</span><span class="pln"> </span><span class="com">/* La couleur d'arrière-plan... */</span><span class="pln">
+    background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> rgba</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0</span><span class="pun">,</span><span class="lit">0.4</span><span class="pun">);</span><span class="pln"> </span><span class="com">/* ...avec de la transparence si supporté par le navigateur */</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">-</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> fadeIn</span><span class="pun">;</span><span class="pln"> </span><span class="com">/* Et on lance l'animation (voir ci-dessous) */</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.4s</span><span class="pun">;</span><span class="pln">
+    animation</span><span class="pun">-</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> fadeIn</span><span class="pun">;</span><span class="pln">
+    animation</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.4s</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/* Modal Content */</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">modal</span><span class="pun">-</span><span class="pln">content </span><span class="pun">{</span><span class="pln">
+    position</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">fixed</span><span class="pun">;</span><span class="pln">
+    bottom</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln">
+    background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#fefefe;</span><span class="pln">
+    width</span><span class="pun">:</span><span class="pln"> </span><span class="lit">100</span><span class="pun">%;</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">-</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> slideIn</span><span class="pun">;</span><span class="pln">
+    </span><span class="pun">-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">animation</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.4s</span><span class="pun">;</span><span class="pln">
+    animation</span><span class="pun">-</span><span class="pln">name</span><span class="pun">:</span><span class="pln"> slideIn</span><span class="pun">;</span><span class="pln">
+    animation</span><span class="pun">-</span><span class="pln">duration</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0.4s</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/* The Close Button */</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">close </span><span class="pun">{</span><span class="pln">
+    color</span><span class="pun">:</span><span class="pln"> white</span><span class="pun">;</span><span class="pln">
+    </span><span class="kwd">float</span><span class="pun">:</span><span class="pln"> right</span><span class="pun">;</span><span class="pln">
+    font</span><span class="pun">-</span><span class="pln">size</span><span class="pun">:</span><span class="pln"> </span><span class="lit">28px</span><span class="pun">;</span><span class="pln">
+    font</span><span class="pun">-</span><span class="pln">weight</span><span class="pun">:</span><span class="pln"> bold</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">close</span><span class="pun">:</span><span class="pln">hover</span><span class="pun">,</span><span class="pln">
+</span><span class="pun">.</span><span class="pln">close</span><span class="pun">:</span><span class="pln">focus </span><span class="pun">{</span><span class="pln">
+    color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#000;</span><span class="pln">
+    text</span><span class="pun">-</span><span class="pln">decoration</span><span class="pun">:</span><span class="pln"> none</span><span class="pun">;</span><span class="pln">
+    cursor</span><span class="pun">:</span><span class="pln"> pointer</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">modal</span><span class="pun">-</span><span class="pln">header </span><span class="pun">{</span><span class="pln">
+    padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2px</span><span class="pln"> </span><span class="lit">16px</span><span class="pun">;</span><span class="pln">
+    background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#5cb85c;</span><span class="pln">
+    color</span><span class="pun">:</span><span class="pln"> white</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">modal</span><span class="pun">-</span><span class="pln">body </span><span class="pun">{</span><span class="pln">padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2px</span><span class="pln"> </span><span class="lit">16px</span><span class="pun">;}</span><span class="pln">
+
+</span><span class="pun">.</span><span class="pln">modal</span><span class="pun">-</span><span class="pln">footer </span><span class="pun">{</span><span class="pln">
+    padding</span><span class="pun">:</span><span class="pln"> </span><span class="lit">2px</span><span class="pln"> </span><span class="lit">16px</span><span class="pun">;</span><span class="pln">
+    background</span><span class="pun">-</span><span class="pln">color</span><span class="pun">:</span><span class="pln"> </span><span class="com">#5cb85c;</span><span class="pln">
+    color</span><span class="pun">:</span><span class="pln"> white</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="com">/* Add Animation */</span><span class="pln">
+</span><span class="pun">@-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">keyframes slideIn </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln">bottom</span><span class="pun">:</span><span class="pln"> </span><span class="pun">-</span><span class="lit">300px</span><span class="pun">;</span><span class="pln"> opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">}</span><span class="pln"> 
+    to </span><span class="pun">{</span><span class="pln">bottom</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="lit">@keyframes</span><span class="pln"> slideIn </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln">bottom</span><span class="pun">:</span><span class="pln"> </span><span class="pun">-</span><span class="lit">300px</span><span class="pun">;</span><span class="pln"> opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">}</span><span class="pln">
+    to </span><span class="pun">{</span><span class="pln">bottom</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span><span class="pln"> opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="pun">@-</span><span class="pln">webkit</span><span class="pun">-</span><span class="pln">keyframes fadeIn </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">}</span><span class="pln"> 
+    to </span><span class="pun">{</span><span class="pln">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+</span><span class="lit">@keyframes</span><span class="pln"> fadeIn </span><span class="pun">{</span><span class="pln">
+    </span><span class="kwd">from</span><span class="pln"> </span><span class="pun">{</span><span class="pln">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">}</span><span class="pln"> 
+    to </span><span class="pun">{</span><span class="pln">opacity</span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></pre>
+            
+                <p>Suite à cela, nous allons rajouter du contenu modal dans le fichier <b>musee.html</b>. Il doit se trouver entre le canvas et le chargement du script <b>musee.js</b>.</p>
+                <xmp class="prettyprint lang=html prettyprinted" style=""><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"fenetreModal"</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-content"</span><span class="tag">&gt;</span><span class="pln">
+        </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-header"</span><span class="tag">&gt;</span><span class="pln">
+            </span><span class="tag">&lt;span</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"close"</span><span class="tag">&gt;</span><span class="pln">&amp;times;</span><span class="tag">&lt;/span&gt;</span><span class="pln"> </span><span class="com">&lt;!-- Le &amp;times; exprime le symbone 'x' pour faire la forme d'une croix dans le top.--&gt;</span><span class="pln">
+            </span><span class="tag">&lt;h2&gt;</span><span class="pln">Titre de la fenêtre</span><span class="tag">&lt;/h2&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+        
+        </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-body"</span><span class="tag">&gt;</span><span class="pln">
+            </span><span class="tag">&lt;p&gt;</span><span class="pln">Contenu de la fenêtre</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+        
+        </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"modal-footer"</span><span class="tag">&gt;</span><span class="pln">
+            </span><span class="tag">&lt;p&gt;</span><span class="pln">Le contenu en bas de la fenêtre</span><span class="tag">&lt;/p&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/div&gt;</span><span class="pln">
+</span><span class="tag">&lt;/div&gt;</span></xmp>
+                
+                <p>Ensuite, nous allons rajouter des éléments au fichier <b>musee.js</b> pour qu'on puisse utiliser ces fenêtres. Dans un premier temps, nous allons ajouter ces éléments à la fin du document.</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> fenetreModal </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="str">'fenetreModal'</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On récupère la fenêtre modale du fichier musee.html</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> span </span><span class="pun">=</span><span class="pln"> document</span><span class="pun">.</span><span class="pln">getElementsByClassName</span><span class="pun">(</span><span class="str">"close"</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">]</span><span class="pln"> </span><span class="com">//On récupère la croix de la fenêtre modale</span><span class="pln">
+span</span><span class="pun">.</span><span class="pln">onclick </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(){</span><span class="pln">fenetreModal</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">display </span><span class="pun">=</span><span class="pln"> </span><span class="str">"none"</span><span class="pun">;}</span><span class="pln"> </span><span class="com">//On cache la fenêtre modale si on clique sur la croix</span><span class="pln">
+windows</span><span class="pun">.</span><span class="pln">onclick </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pun">(</span><span class="kwd">event</span><span class="pun">.</span><span class="pln">target </span><span class="pun">==</span><span class="pln"> fenetreModal</span><span class="pun">)</span><span class="pln">
+        fenetreModal</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">display </span><span class="pun">=</span><span class="pln"> </span><span class="str">"none"</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">}</span><span class="com">//Si on clique sur la partie sombre, la fenêtre modale se fermera.</span></pre>
+                
+                <p>Les fenêtres modales sont presque prêtes à l'emploi, 
+il suffit de les activer dans le rendu. Dans un premier temps, au début 
+du fichier, nous allons déclarer une variable globale au début du 
+fichier pour savoir si on est dans une zone de description.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="kwd">var</span><span class="pln"> canDisplay </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span></code>
+                
+                <p>Ensuite, nous allons créer une sphere qui servira de 
+zone de trigger pour afficher le contenu, et qui sera invisible. (On 
+peut faire un matériau invisible en mettant son alpha à 0).</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//Dans la fonction createScene</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sphereModal </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateSphere</span><span class="pun">(</span><span class="str">"sphereModal"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">16</span><span class="pun">,</span><span class="pln"> </span><span class="lit">14</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+sphereModal</span><span class="pun">.</span><span class="pln">material </span><span class="pun">=</span><span class="pln"> invisbleMat</span><span class="pun">;</span></pre>
+                <p>Il ne reste plus que dans la boucle de rendu de 
+tester si la sphere de collision attaché à la caméra a une collision 
+avec cette sphere, et on pourra détecter si la caméra est dans cette 
+zone.</p>
+                <code class="prettyprint lang=js prettyprinted" style=""><span class="pln">canDisplay </span><span class="pun">=</span><span class="pln"> hitbox</span><span class="pun">.</span><span class="pln">intersects</span><span class="pun">(</span><span class="pln">sphereModal</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span></code>
+                
+                <p>Pour terminer, il suffit de rajouter à la fin du 
+fichier de script un DOM pour quand on presse la touche "e" de faire 
+afficher la fenêtre modale.</p>
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="pln">window</span><span class="pun">.</span><span class="pln">addEventListener</span><span class="pun">(</span><span class="str">"keypress"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">(</span><span class="pln">e</span><span class="pun">){</span><span class="pln">
+    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">e</span><span class="pun">.</span><span class="pln">key </span><span class="pun">==</span><span class="pln"> </span><span class="str">"e"</span><span class="pln"> </span><span class="pun">&amp;&amp;</span><span class="pln"> canDisplay</span><span class="pun">)</span><span class="pln">
+        fenetreModal</span><span class="pun">.</span><span class="pln">style</span><span class="pun">.</span><span class="pln">display </span><span class="pun">=</span><span class="pln"> </span><span class="str">"block"</span><span class="pun">;</span><span class="pln">
+</span><span class="pun">});</span></pre>
+            <p>Suite à cela, si vous entrez dans la sphere (si vous ne 
+la trouvez pas, enlevez le matériau invisible), et si vous appuyez sur 
+la touche E, vous devriez avoir ce résultat :</p>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/modal1.jpg" style="width:100%" onclick="onClick(this)" alt="Le rendu avec une fenêtre modale">
+                <p>Suite à cela, nous avons tous les éléments de prêt, nous pouvons commencer à créer notre exposition.</p>
+			</div>
+            
+            <div class="w3-container" id="expo" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-purple"><b>Mise en place de l'exposition virtuelle.</b></h1>
+				<hr style="width:50px;border:5px solid purple" class="w3-round">
+				<p>Lors des précédents chapitres, nous avons tout mis en place et 
+préparé les objets et fonctions pour créer l'exposition. Il faut 
+maintenant tout raccorder pour obtenir les résultat montré au début. 
+Pour créer une oeuvre d'interaction, on aura besoin de :</p>
+                <ul>
+                    <li>D'un plane avec une vidéo lié à l'interaction</li>
+                    <li>Une fenêtre modale décrivant l'interaction</li>
+                    <li>Une sphere pour pouvoir déclencher la fenêtre</li>
+                    <li>Une lumière pour marquer l'emplacement de l'interaction</li>
+                </ul>
+                <p>Tout combiné, nous devrions obtenir un élément de ce type :</p>
+                <img src="Mus%C3%A9e%20virtuel%20--%20Technote%20IHM_fichiers/expo1.jpg" style="width:100%" onclick="onClick(this)" alt="Exemple d'un élément d'exposition">
+                
+                <p>Nous devrions avoir ce code pour chaque élément exposé :</p>     
+                <pre class="prettyprint lang=js prettyprinted" style=""><span class="com">//Dans la fonction createScene</span><span class="pln">
+</span><span class="com">//Ecran de l'expo</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> ecranJeu </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreatePlane</span><span class="pun">(</span><span class="str">"TVJeu"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+ecranJeu</span><span class="pun">.</span><span class="pln">rotation</span><span class="pun">.</span><span class="pln">y </span><span class="pun">=</span><span class="pln"> </span><span class="typ">Math</span><span class="pun">.</span><span class="pln">acos</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On tourne l'écran pour qu'il colle au mur de droite</span><span class="pln">
+ecranJeu</span><span class="pun">.</span><span class="pln">scaling</span><span class="pun">.</span><span class="pln">x </span><span class="pun">*=</span><span class="pln"> </span><span class="lit">16</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Application d'un format 16:9 pour coller au format de la video.</span><span class="pln">
+ecranJeu</span><span class="pun">.</span><span class="pln">scaling</span><span class="pun">.</span><span class="pln">y </span><span class="pun">*=</span><span class="pln"> </span><span class="lit">9</span><span class="pun">;</span><span class="pln">
+ecranJeu</span><span class="pun">.</span><span class="pln">position </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">35.41</span><span class="pun">,</span><span class="pln"> </span><span class="lit">6</span><span class="pun">,</span><span class="pln"> </span><span class="lit">8</span><span class="pun">);</span><span class="pln">
+
+</span><span class="com">//Materiau de vidéo</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> videoJeu </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">StandardMaterial</span><span class="pun">(</span><span class="str">"textVidJeu"</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+videoJeu</span><span class="pun">.</span><span class="pln">diffuseTexture </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">VideoTexture</span><span class="pun">(</span><span class="str">"videoJeu"</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="str">"video/jeu.mp4"</span><span class="pun">],</span><span class="pln"> scene</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">);</span><span class="pln">
+videoJeu</span><span class="pun">.</span><span class="pln">backFaceCulling </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span><span class="pun">;</span><span class="pln"> </span><span class="com">//Pour pouvoir la voir des deux côtés du plan.</span><span class="pln">
+videoJeu</span><span class="pun">.</span><span class="pln">diffuseColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">255</span><span class="pun">,</span><span class="pln"> </span><span class="lit">255</span><span class="pun">,</span><span class="pln"> </span><span class="lit">255</span><span class="pun">);</span><span class="pln"> </span><span class="com">//On manipule ces deux couleurs pour voir la vidéo quelque soit la luminosité.</span><span class="pln">
+videoJeu</span><span class="pun">.</span><span class="pln">specularColor </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span><span class="pln">
+
+ecranJeu</span><span class="pun">.</span><span class="pln">material </span><span class="pun">=</span><span class="pln"> videoJeu</span><span class="pun">;</span><span class="pln"> 
+
+videoJeu</span><span class="pun">.</span><span class="pln">diffuseTexture</span><span class="pun">.</span><span class="pln">video</span><span class="pun">.</span><span class="pln">loop </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">true</span><span class="pun">;</span><span class="pln"> 
+		
+</span><span class="com">//Lumière</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> lumJeuExpo </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">SpotLight</span><span class="pun">(</span><span class="str">"SpotJV"</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">15</span><span class="pun">,</span><span class="pln"> </span><span class="lit">8</span><span class="pun">),</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">),</span><span class="pln"> </span><span class="pun">.</span><span class="lit">8</span><span class="pun">,</span><span class="pln"> </span><span class="lit">2</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+lumJeuExpo</span><span class="pun">.</span><span class="pln">intensity </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln">
+lumJeuExpo</span><span class="pun">.</span><span class="pln">diffuse </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Color3</span><span class="pun">(</span><span class="lit">0</span><span class="pun">,</span><span class="lit">1</span><span class="pun">,</span><span class="lit">0</span><span class="pun">);</span><span class="pln"> </span><span class="com">//Vert</span><span class="pln">
+		
+</span><span class="com">//Sphere de zone</span><span class="pln">
+</span><span class="kwd">var</span><span class="pln"> sphereJVExpo </span><span class="pun">=</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Mesh</span><span class="pun">.</span><span class="typ">CreateSphere</span><span class="pun">(</span><span class="str">"sphereJV"</span><span class="pun">,</span><span class="pln"> </span><span class="lit">16</span><span class="pun">,</span><span class="pln"> </span><span class="lit">14</span><span class="pun">,</span><span class="pln"> scene</span><span class="pun">);</span><span class="pln">
+sphereJVExpo</span><span class="pun">.</span><span class="pln">position </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">new</span><span class="pln"> BABYLON</span><span class="pun">.</span><span class="typ">Vector3</span><span class="pun">(</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln"> </span><span class="lit">8</span><span class="pun">);</span><span class="pln">
+sphereJVExpo</span><span class="pun">.</span><span class="pln">material </span><span class="pun">=</span><span class="pln"> invisibleMat</span><span class="pun">;</span></pre>
+			
+                <p>Suite à cela, on remplit la fenêtre modale lié à cet 
+élément, on le déclare comme dans la section précédente, et on répète 
+pour tous les éléments que l'on souhaite rajouter dans l'exposition. 
+Adaptez comme vous le souhaitez, et vous félicitations, vous venez de 
+créer votre propre exposition virtuelle de musée !</p>
+            </div>
+            
+            <div class="w3-container" id="conclusion" style="margin-top:75px">
+				<h1 class="w3-xxxlarge w3-text-red"><b>Conclusion.</b></h1>
+				<hr style="width:50px;border:5px solid red" class="w3-round">
+				<p>Et c'est ainsi que se termine cette technote tutoriel sur la 
+création d'une exposition virtuelle d'un musée virtuel. On peut encore 
+l'améliorer, comme par exemple créer une interface utilisateur pour 
+indiquer à l'utilisateur qu'il peut interagir avec (ou l'améliorer au 
+lieu d'utiliser une fenêtre modale comme dans la démonstration).</p>
+                <p>Cependant BabylonJS est encore une librairie récente,
+ ainsi que le WebGL, donc certains éléments peuvent devenir obsolètes 
+d'ici quelques années, cependant la librairie a un grand potentiel pour 
+réaliser des présentations, des modélisations ou bien des jeux.</p>
+                <h4>Merci d'avoir suivi cette technote !</h4>
+			</div>
+			
+			<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Boosté par le <a href="http://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+			
+			  <!-- Partie modale pour un visualiseur de photos-->
+			  <div id="modal01" class="w3-modal w3-black w3-padding-0" onclick="this.style.display='none'">
+					<span class="w3-closebtn w3-text-white w3-opacity w3-hover-opacity-off w3-xxlarge w3-container w3-display-topright">×</span>
+					<div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+						  <img id="img01" class="w3-image">
+						  <p id="caption"></p>
+					</div>
+			  </div>
+			
+		</div>
+        
+    
+	<script>
+		// Script to open and close sidenav
+		function w3_open() {
+			document.getElementById("mySidenav").style.display = "block";
+			document.getElementById("myOverlay").style.display = "block";
+		}
+
+		function w3_close() {
+			document.getElementById("mySidenav").style.display = "none";
+			document.getElementById("myOverlay").style.display = "none";
+		}
+		
+		function onClick(element) {
+		  	document.getElementById("img01").src = element.src;
+		  	document.getElementById("modal01").style.display = "block";
+		  	var captionText = document.getElementById("caption");
+		  	captionText.innerHTML = element.alt;
+		}
+	</script>
+    
+</body></html>
